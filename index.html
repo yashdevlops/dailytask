@@ -4,20 +4,22 @@
   <meta charset="UTF-8">
   <title>LifeTrack AI Dashboard</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
   <link rel="stylesheet" href="style.css">
+
+  <!-- Chart Library -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <!-- 3D Library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
 
 <body>
-
   <div class="container">
     <h1>🚀 LifeTrack AI</h1>
     <p class="subtitle">Smart Daily Performance Analyzer</p>
 
     <div class="dashboard">
 
-      <!-- INPUT CARD -->
       <div class="card">
         <h2>📥 Daily Input</h2>
         <form id="form">
@@ -31,18 +33,19 @@
         </form>
       </div>
 
-      <!-- ANALYSIS CARD -->
       <div class="card">
         <h2>🤖 AI Analysis</h2>
-        <div id="analysis">
-          Enter today's data to see insights...
-        </div>
+        <div id="analysis">Enter today's data to see insights...</div>
       </div>
 
-      <!-- GRAPH CARD -->
       <div class="card">
         <h2>📊 Productivity Trend</h2>
         <canvas id="chart"></canvas>
+      </div>
+
+      <div class="card">
+        <h2>🌌 3D Performance View</h2>
+        <div id="three-container"></div>
       </div>
 
     </div>
