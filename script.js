@@ -1,10 +1,9 @@
 let data = JSON.parse(localStorage.getItem("lifeData")) || [];
-const form = document.getElementById("form");
 const analysis = document.getElementById("analysis");
+const form = document.getElementById("form");
 
 form.addEventListener("submit", e => {
   e.preventDefault();
-
   const entry = {
     date: date.value,
     work: +work.value,
@@ -13,66 +12,55 @@ form.addEventListener("submit", e => {
     exercise: +exercise.value,
     mood: +mood.value
   };
-
   data.push(entry);
   localStorage.setItem("lifeData", JSON.stringify(data));
 
-  analyze(entry);
-  drawChart();
+  drawCharts();
   init3D(entry);
+  getAIAdvice(entry);
+  weeklyReport();
 });
 
-function analyze(e){
-  let score = e.work + e.study - (e.sleep < 6 ? 2 : 0);
-  let msg = score > 7 ? "🔥 Extremely productive day!"
-          : score > 5 ? "👍 Good work, keep going!"
-          : "⚠ Try improving focus tomorrow.";
-
-  analysis.innerHTML = `<h3>Score: ${score}</h3><p>${msg}</p>`;
+function drawCharts(){
+  new Chart(chart,{type:"line",data:{labels:data.map(d=>d.date),datasets:[{label:"Productivity",data:data.map(d=>d.work+d.study)}]}});
+  new Chart(moodChart,{type:"bar",data:{labels:data.map(d=>d.date),datasets:[{label:"Mood",data:data.map(d=>d.mood)}]}});
 }
 
-function drawChart(){
-  const labels = data.map(d=>d.date);
-  const prod = data.map(d=>d.work+d.study);
-
-  new Chart(document.getElementById("chart"),{
-    type:"line",
-    data:{ labels, datasets:[{label:"Productivity", data:prod, borderColor:"#00f5ff"}] }
-  });
+function weeklyReport(){
+  const last7=data.slice(-7);
+  const avg=last7.reduce((a,b)=>a+b.work+b.study,0)/last7.length;
+  analysis.innerHTML=`<b>Weekly Avg Productivity:</b> ${avg.toFixed(1)} hrs/day<br>`;
 }
 
-function init3D(entry) {
-  const container = document.getElementById("three-container");
-  container.innerHTML = "";
-
-  const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(75, container.clientWidth/container.clientHeight, 0.1, 1000);
-  const renderer = new THREE.WebGLRenderer({alpha:true});
-  renderer.setSize(container.clientWidth, container.clientHeight);
-  container.appendChild(renderer.domElement);
-
-  const light = new THREE.PointLight(0xffffff, 1);
-  light.position.set(10,10,10);
-  scene.add(light);
-
-  const bars = [entry.work, entry.study, entry.sleep, entry.exercise/30];
-  const colors = [0x00f5ff, 0xff00ff, 0x00ff88, 0xffaa00];
-
-  bars.forEach((value, i) => {
-    const geometry = new THREE.BoxGeometry(1, value, 1);
-    const material = new THREE.MeshStandardMaterial({color: colors[i]});
-    const cube = new THREE.Mesh(geometry, material);
-    cube.position.x = i * 2 - 3;
-    cube.position.y = value / 2;
-    scene.add(cube);
+async function getAIAdvice(entry){
+  const prompt=`Give short productivity advice. Work:${entry.work}, Study:${entry.study}, Sleep:${entry.sleep}, Exercise:${entry.exercise}, Mood:${entry.mood}`;
+  const res=await axios.post("https://api.openai.com/v1/chat/completions",{
+    model:"gpt-4o-mini",
+    messages:[{role:"user",content:prompt}]
+  },{
+    headers:{Authorization:"Bearer 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"}
   });
+  analysis.innerHTML+=`<p>🤖 ${res.data.choices[0].message.content}</p>`;
+}
 
-  camera.position.z = 8;
+function sendChat(){
+  const msg=chatInput.value;
+  chatBox.innerHTML+=`<div>You: ${msg}</div>`;
+}
 
-  function animate() {
-    requestAnimationFrame(animate);
-    scene.rotation.y += 0.01;
-    renderer.render(scene, camera);
-  }
-  animate();
+function init3D(entry){
+  const c=document.getElementById("three-container");
+  c.innerHTML="";
+  const scene=new THREE.Scene();
+  const camera=new THREE.PerspectiveCamera(75,c.clientWidth/c.clientHeight,0.1,1000);
+  const renderer=new THREE.WebGLRenderer({alpha:true});
+  renderer.setSize(c.clientWidth,c.clientHeight);
+  c.appendChild(renderer.domElement);
+  const light=new THREE.PointLight(0xffffff,1); light.position.set(10,10,10); scene.add(light);
+  [entry.work,entry.study,entry.sleep,entry.exercise/30].forEach((v,i)=>{
+    const cube=new THREE.Mesh(new THREE.BoxGeometry(1,v,1),new THREE.MeshStandardMaterial({color:[0x00f5ff,0xff00ff,0x00ff88,0xffaa00][i]}));
+    cube.position.set(i*2-3,v/2,0); scene.add(cube);
+  });
+  camera.position.z=8;
+  (function animate(){requestAnimationFrame(animate);scene.rotation.y+=0.01;renderer.render(scene,camera);})();
 }
