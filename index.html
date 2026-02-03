@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>LifeTrack AI</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <h1>LifeTrack AI</h1>
+
+  <form id="form">
+    <input type="date" id="date" required>
+    <input type="number" id="work" placeholder="Work Hours" required>
+    <input type="number" id="study" placeholder="Study Hours" required>
+    <input type="number" id="sleep" placeholder="Sleep Hours" required>
+    <input type="number" id="exercise" placeholder="Exercise Minutes" required>
+    <input type="number" id="mood" placeholder="Mood (1-5)" required>
+    <button>Save</button>
+  </form>
+
+  <div id="analysis"></div>
+  <canvas id="chart"></canvas>
+
+  <script src="script.js"></script>
+</body>
+</html>
