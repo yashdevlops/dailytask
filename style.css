@@ -3,7 +3,6 @@ body {
   font-family: 'Segoe UI', sans-serif;
   color: white;
   background: radial-gradient(circle at top left, #0f2027, #203a43, #2c5364);
-  overflow-x: hidden;
 }
 
 .container {
@@ -15,7 +14,6 @@ body {
 h1 {
   text-align: center;
   font-size: 3rem;
-  margin-bottom: 5px;
   text-shadow: 0 0 15px cyan;
 }
 
@@ -37,12 +35,6 @@ h1 {
   border-radius: 18px;
   padding: 20px;
   box-shadow: 0 0 20px rgba(0,255,255,0.15);
-  transition: 0.3s;
-}
-
-.card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 0 25px rgba(0,255,255,0.4);
 }
 
 input {
@@ -60,10 +52,10 @@ button {
   border-radius: 10px;
   font-weight: bold;
   cursor: pointer;
-  transition: 0.3s;
 }
 
-button:hover {
-  transform: scale(1.1);
-  box-shadow: 0 0 15px #00f5ff;
+#three-container {
+  width: 100%;
+  height: 300px;
+  border-radius: 12px;
 }
