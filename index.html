@@ -1,42 +1,53 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
   <title>LifeTrack AI Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
   <link rel="stylesheet" href="style.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
+
 <body>
 
-<div class="bg-animation"></div>
+  <div class="container">
+    <h1>🚀 LifeTrack AI</h1>
+    <p class="subtitle">Smart Daily Performance Analyzer</p>
 
-<div class="container">
-  <h1>🚀 LifeTrack AI</h1>
-  <p class="subtitle">Smart Daily Performance Analyzer</p>
+    <div class="dashboard">
 
-  <div class="card">
-    <h2>Daily Input</h2>
-    <form id="form">
-      <input type="date" id="date" required>
-      <input type="number" id="work" placeholder="Work Hours" required>
-      <input type="number" id="study" placeholder="Study Hours" required>
-      <input type="number" id="sleep" placeholder="Sleep Hours" required>
-      <input type="number" id="exercise" placeholder="Exercise Minutes" required>
-      <input type="number" id="mood" placeholder="Mood (1-5)" required>
-      <button type="submit">Analyze Day</button>
-    </form>
+      <!-- INPUT CARD -->
+      <div class="card">
+        <h2>📥 Daily Input</h2>
+        <form id="form">
+          <input type="date" id="date" required>
+          <input type="number" id="work" placeholder="Work Hours" required>
+          <input type="number" id="study" placeholder="Study Hours" required>
+          <input type="number" id="sleep" placeholder="Sleep Hours" required>
+          <input type="number" id="exercise" placeholder="Exercise Minutes" required>
+          <input type="number" id="mood" placeholder="Mood (1-5)" required>
+          <button type="submit">Analyze Day</button>
+        </form>
+      </div>
+
+      <!-- ANALYSIS CARD -->
+      <div class="card">
+        <h2>🤖 AI Analysis</h2>
+        <div id="analysis">
+          Enter today's data to see insights...
+        </div>
+      </div>
+
+      <!-- GRAPH CARD -->
+      <div class="card">
+        <h2>📊 Productivity Trend</h2>
+        <canvas id="chart"></canvas>
+      </div>
+
+    </div>
   </div>
 
-  <div class="card">
-    <h2>AI Analysis</h2>
-    <div id="analysis">Enter today's data to see insights...</div>
-  </div>
-
-  <div class="card">
-    <h2>Productivity Trend</h2>
-    <canvas id="chart"></canvas>
-  </div>
-</div>
-
-<script src="script.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
