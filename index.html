@@ -6,17 +6,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="style.css">
 
-  <!-- Chart Library -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-  <!-- 3D Library -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
 
 <body>
   <div class="container">
     <h1>🚀 LifeTrack AI</h1>
-    <p class="subtitle">Smart Daily Performance Analyzer</p>
+    <p class="subtitle">AI-Powered Daily Performance Dashboard</p>
 
     <div class="dashboard">
 
@@ -35,7 +33,7 @@
 
       <div class="card">
         <h2>🤖 AI Analysis</h2>
-        <div id="analysis">Enter today's data to see insights...</div>
+        <div id="analysis">AI insights will appear here...</div>
       </div>
 
       <div class="card">
@@ -44,8 +42,20 @@
       </div>
 
       <div class="card">
+        <h2>😃 Mood Trend</h2>
+        <canvas id="moodChart"></canvas>
+      </div>
+
+      <div class="card">
         <h2>🌌 3D Performance View</h2>
         <div id="three-container"></div>
+      </div>
+
+      <div class="card">
+        <h2>🗨 AI Chat Assistant</h2>
+        <div id="chatBox"></div>
+        <input type="text" id="chatInput" placeholder="Ask AI about your productivity...">
+        <button onclick="sendChat()">Send</button>
       </div>
 
     </div>
